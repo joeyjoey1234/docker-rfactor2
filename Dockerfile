@@ -24,6 +24,7 @@ RUN apt-get update -y \
 		unzip \
 		wget \
 		gnupg2 \
+		unzip \
 		software-properties-common
 		
 RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key
@@ -103,12 +104,15 @@ RUN echo '#!/bin/bash \n jwm & \n xterm &' >> /home/docker/.xsession
 RUN chmod +x /home/docker/.xsession
 RUN chown docker:docker /home/docker/.xsession
 
-RUN echo '#!/bin/bash \n cd /home/docker/.wine/drive_c/Program\ Files*86*/rFactor2/Launcher \n wine Launch\ rFactor.exe' >> /home/docker/runrf2.sh
+RUN echo '#!/bin/bash \n cd /home/docker/.wine/drive_c/Racing/rfactor2-dedicated/Bin64/ \n wine rFactor2\ Dedicated.exe' >> /home/docker/runrf2.sh
 RUN chmod +x /home/docker/runrf2.sh
 RUN chown docker:docker /home/docker/runrf2.sh
 
-# Download rFactor2 Lite Build 1036
-RUN cd /home/docker && wget http://www.mediafire.com/download/xdqvbzredm3z9z5/rFactor2_LiteBuild_1036.exe
+RUN mkdir /home/docker/.wine/drive_c/racing/STEAMCMD/
+RUN cd /home/docker/.wine/drive_c/racing/STEAMCMD/ && wget -nc http://media.steampowered.com/installer/steamcmd.zip
+RUN unzip steamcmd.zip
+RUN wine steamcmd.exe +login anonymous +force_install_dir ../rFactor2-Dedicated +app_update 400300 +quit
+
 RUN chown docker:docker /home/docker/*.exe
 
 # Start xdm and ssh services.
