@@ -134,4 +134,6 @@ RUN pwd
 
 ADD . /src
 # Start xdm and ssh services.
+ENV  USER=docker HOME=/home/docker
+
 CMD ["/bin/bash", "/src/startup.sh"]
