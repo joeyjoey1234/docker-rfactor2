@@ -110,11 +110,11 @@ RUN wine msiexec /i wine-mono-7.1.1-x86.msi
 RUN wine msiexec /i wine-gecko-2.47.2-x86_64.msi
 RUN wine msiexec /i wine-gecko-2.47.1-x86.msi
 
-RUN echo '#!/bin/bash \n cd /home/docker/.wine/drive_c/Racing/rfactor2-dedicated/Bin64/ \n wine rFactor2\ Dedicated.exe' >> /home/docker/runrf2.sh
+RUN echo '#!/bin/bash \n cd /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Bin64/ \n wine rFactor2\ Dedicated.exe' >> /home/docker/runrf2.sh
 RUN chmod +x /home/docker/runrf2.sh
 RUN chown docker:docker /home/docker/runrf2.sh
 
-RUN mkdir /home/docker/.wine/drive_c/racing/
+RUN mkdir -p /home/docker/.wine/drive_c/racing/
 RUN mkdir /home/docker/.wine/drive_c/racing/STEAMCMD/
 RUN cd /home/docker/.wine/drive_c/racing/STEAMCMD/ && wget -nc http://media.steampowered.com/installer/steamcmd.zip
 RUN unzip steamcmd.zip
