@@ -1,5 +1,5 @@
 
-PteroDatycl docker-rfactor2
+PteroDatycl factor2
 ===============
 
 rFactor2 server inside a docker container. This allows you to run a rFactor 2 server in a Linux vps which is cheaper than a Windows one.
