@@ -42,10 +42,8 @@ RUN dpkg --add-architecture i386 \
 	&& apt-get update -y \
 	&& apt-get install -y --no-install-recommends \
 		winehq-stable \
-		wine-gecko:i386 \
-		wine-gecko:amd64 \
-		wine-mono \
-	&& rm -rf /var/lib/apt/lists/*
+		wine-gecko \
+		wine-mono 
 
 
 # Use the latest version of winetricks
