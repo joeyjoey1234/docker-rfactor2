@@ -1,22 +1,20 @@
 
 
-pterodactyl-rfactor2
+Docker-rfactor2
 ===============
 
-**Work in progress. Please test, Clean up is needed, and is in progress.**
+**Work in progress. Please test, Clean up is needed, and is not in progress.**
 ![alt text](docker_rfactor2_diagram.png "Diagram")
 
-Install the eggie in your pterodactyl server
-Server needs atleast 4 ports.
+Grab the package here  ghcr.io/joeyjoey1234/ptero-rfactor2:latest
+Server needs atleast 4 ports and the steam ports possibly
 
-EXPOSE 22  *in egg as Variable*
-EXPOSE 54297 *Static* You have to get this to open.
-EXPOSE 64297 *Static*
-EXPOSE 5900 *in egg as Variable*
+EXPOSE 22  SSH Server
+EXPOSE 54297 Game Port
+EXPOSE 64297 Game Port
+EXPOSE 5900 VNC Server
 
-VAR's in egg
-:VAR SSH_PORT: self explaintory port for the ssh server
-:VAR VNC_PORT: self explaintory port for the VNC Server
-:VAR PASSWORD: Sets the docker user password every machine start
+YOU MUST HAVE A password VAR in your env.
+This will be the VNC password
 
 
