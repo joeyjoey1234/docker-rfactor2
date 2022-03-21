@@ -8,8 +8,8 @@
 #cp /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Support/Tools/MAS2_x64.exe /home/docker/.wine/drive_c/racing/rfactor2-dedicated/MAS2_x64.exe
 
 
-/etc/init.d/xdm restart &
+/etc/init.d/xdm restart 
 
 # Start the ssh service
-/usr/sbin/sshd -D &
+/usr/sbin/sshd
 /home/docker/startvnc.sh 
