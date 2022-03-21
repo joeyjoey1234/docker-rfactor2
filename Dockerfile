@@ -7,7 +7,6 @@
 # VNC server: To access the desktop remotely. 
 # Wine: Windows implementation to be able to install and run rFactor 2
 # 
-# Based on rogaha/docker-desktop and suchja/wine
 
 
 FROM debian:latest
@@ -59,7 +58,7 @@ RUN echo X11Forwarding yes >> /etc/ssh/ssh_config
 # Fix PAM login issue with sshd
 RUN sed -i 's/session    required     pam_loginuid.so/#session    required     pam_loginuid.so/g' /etc/pam.d/sshd
 
-# Upstart and DBus have issues inside docker. We work around in order to install firefox.
+# Upstart and DBus have issues inside container. We work around in order to install firefox.
 RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
 
 
@@ -78,26 +77,26 @@ EXPOSE 5900
 # Create the directory needed to run the sshd daemon
 RUN mkdir /var/run/sshd 
 
-# Add docker user and generate a random password with 12 characters that includes at least one capital letter and number.
-RUN useradd -m -d /home/docker  docker
-#TODO password is docker, change it
-RUN echo 'docker:docker' | chpasswd
-RUN sed -Ei 's/adm:x:4:/docker:x:4:docker/' /etc/group
-RUN adduser docker sudo
+# Add container user and generate a random password with 12 characters that includes at least one capital letter and number.
+RUN useradd -m -d /home/container  container
+#TODO password is container, change it
+RUN echo 'container:container' | chpasswd
+RUN sed -Ei 's/adm:x:4:/container:x:4:container/' /etc/group
+RUN adduser container sudo
 
-# Set the default shell as bash for docker user.
-RUN chsh -s /bin/bash docker
+# Set the default shell as bash for container user.
+RUN chsh -s /bin/bash container
 
-RUN echo 'export WINEDLLOVERRIDES="msvcr110,msvcp110=n,b"' >> /home/docker/.bashrc
-RUN echo '#!/bin/bash \n x11vnc -auth /home/someuser/.Xauthority -display :10 -create -forever &' >> /home/docker/startvnc.sh
-RUN chown docker:docker /home/docker/startvnc.sh
-RUN chmod +x /home/docker/startvnc.sh
+RUN echo 'export WINEDLLOVERRIDES="msvcr110,msvcp110=n,b"' >> /home/container/.bashrc
+RUN echo '#!/bin/bash \n x11vnc -auth /home/someuser/.Xauthority -display :10 -create -forever &' >> /home/container/startvnc.sh
+RUN chown container:container /home/container/startvnc.sh
+RUN chmod +x /home/container/startvnc.sh
 
-RUN echo '#!/bin/bash \n jwm & \n xterm &' >> /home/docker/.xsession
-RUN chmod +x /home/docker/.xsession
-RUN chown docker:docker /home/docker/.xsession
+RUN echo '#!/bin/bash \n jwm & \n xterm &' >> /home/container/.xsession
+RUN chmod +x /home/container/.xsession
+RUN chown container:container /home/container/.xsession
 
-RUN su docker
+RUN su container
 RUN cd ~
 RUN apt update
 RUN apt install -y --install-recommends winehq-stable
@@ -110,30 +109,32 @@ RUN wine msiexec /i wine-mono-7.1.1-x86.msi
 RUN wine msiexec /i wine-gecko-2.47.2-x86_64.msi
 RUN wine msiexec /i wine-gecko-2.47.1-x86.msi
 
-RUN echo '#!/bin/bash \n cd /home/docker/.wine/drive_c/racing/STEAMCMD/ \n wine /home/docker/.wine/drive_c/racing/STEAMCMD/steamcmd.exe +login anonymous +force_install_dir ../rFactor2-Dedicated +app_update 400300 +quit \n cp /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Bin64/ModMgr.exe /home/docker/.wine/drive_c/racing/rfactor2-dedicated/ModMgr.exe \n cp /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Bin64/rFactor2\ Dedicated.exe /home/docker/.wine/drive_c/racing/rfactor2-dedicated/rFactor2\ Dedicated.exe \n cp /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Support/Tools/MAS2_x64.exe /home/docker/.wine/drive_c/racing/rfactor2-dedicated/MAS2_x64.exe' >> /home/docker/download_game.sh
-RUN echo '#!/bin/bash \n wine /home/docker/.wine/drive_c/racing/rfactor2-dedicated/ModMgr.exe ' >> /home/docker/start_modmgr.sh
-RUN echo '#!/bin/bash \n wine /home/docker/.wine/drive_c/racing/rfactor2-dedicated/MAS2_x64.exe ' >> /home/docker/start_MAS.sh
-RUN echo '#!/bin/bash \n wine /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Bin64/rFactor2\ Dedicated.exe ' >> /home/docker/start_Server.sh
+RUN echo '#!/bin/bash \n cd /home/container/.wine/drive_c/racing/STEAMCMD/ \n wine /home/container/.wine/drive_c/racing/STEAMCMD/steamcmd.exe +login anonymous +force_install_dir ../rFactor2-Dedicated +app_update 400300 +quit \n cp /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Bin64/ModMgr.exe /home/container/.wine/drive_c/racing/rfactor2-dedicated/ModMgr.exe \n cp /home/container/.wine/drive_c/racing/rfactor2-dedicated/Bin64/rFactor2\ Dedicated.exe /home/container/.wine/drive_c/racing/rfactor2-dedicated/rFactor2\ Dedicated.exe \n cp /home/container/.wine/drive_c/racing/rfactor2-dedicated/Support/Tools/MAS2_x64.exe /home/container/.wine/drive_c/racing/rfactor2-dedicated/MAS2_x64.exe' >> /home/container/download_update_game.sh
+RUN echo '#!/bin/bash \n wine /home/container/.wine/drive_c/racing/rfactor2-dedicated/ModMgr.exe ' >> /home/container/start_modmgr.sh
+RUN echo '#!/bin/bash \n wine /home/container/.wine/drive_c/racing/rfactor2-dedicated/MAS2_x64.exe ' >> /home/container/start_MAS.sh
+RUN echo '#!/bin/bash \n wine /home/container/.wine/drive_c/racing/rfactor2-dedicated/Bin64/rFactor2\ Dedicated.exe ' >> /home/container/start_Server.sh
 
-RUN echo '#!/bin/bash \n echo "paste download link has to be in a zip file or download link from https://steamworkshopdownloader.io/" \n read LINK \n cd ~/.wine/drive_c/racing/rfactor2-dedicated/Packages/ \n wget -O lmao.zip $LINK \n unzip *.zip' >> /home/docker/download_mod.sh
+RUN echo '#!/bin/bash \n echo "paste download link has to be in a zip file or download link from https://steamworkshopdownloader.io/" \n read LINK \n cd ~/.wine/drive_c/racing/rfactor2-dedicated/Packages/ \n wget -O lmao.zip $LINK \n unzip *.zip' >> /home/WORKDIR /home/container/download_mod.sh
 
-RUN chmod +x /home/docker/*.sh
+RUN chmod +x /home/container/*.sh
 
 
-RUN mkdir -p /home/docker/.wine/drive_c/racing/
-RUN mkdir /home/docker/.wine/drive_c/racing/STEAMCMD/
-RUN cd /home/docker/.wine/drive_c/racing/STEAMCMD/
+RUN mkdir -p /home/container/.wine/drive_c/racing/
+RUN mkdir /home/container/.wine/drive_c/racing/STEAMCMD/
+RUN cd /home/container/.wine/drive_c/racing/STEAMCMD/
 RUN wget http://media.steampowered.com/installer/steamcmd.zip
 RUN unzip ./steamcmd.zip
-RUN mv steamcmd.exe /home/docker/.wine/drive_c/racing/STEAMCMD/steamcmd.exe
-RUN chown -R docker:docker /home/docker/*
-RUN chown -R docker:docker /home/docker/.*
+RUN mv steamcmd.exe /home/container/.wine/drive_c/racing/STEAMCMD/steamcmd.exe
+RUN chown -R container:container /home/container/*
+RUN chown -R container:container /home/container/.*
 RUN pwd
-###RUN wine /home/docker/.wine/drive_c/racing/STEAMCMD/steamcmd.exe +login anonymous +force_install_dir ../rFactor2-Dedicated +app_update 400300 +quit
+###RUN wine /home/container/.wine/drive_c/racing/STEAMCMD/steamcmd.exe +login anonymous +force_install_dir ../rFactor2-Dedicated +app_update 400300 +quit
 
 
 ADD . /src
 # Start xdm and ssh services.
-ENV  USER=docker HOME=/home/docker
+USER container
+ENV  USER=container HOME=/home/container
+WORKDIR /home/container
 
 CMD ["/bin/bash", "/src/startup.sh"]
