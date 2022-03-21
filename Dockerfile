@@ -119,6 +119,9 @@ RUN mkdir /home/docker/.wine/drive_c/racing/STEAMCMD/
 RUN cd /home/docker/.wine/drive_c/racing/STEAMCMD/
 RUN wget http://media.steampowered.com/installer/steamcmd.zip
 RUN unzip ./steamcmd.zip
+RUN mv steamcmd.exe /home/docker/.wine/drive_c/racing/STEAMCMD/steamcmd.exe
+RUN chown -R docker:docker /home/docker/*
+RUN chown -R docker:docker /home/docker/.*
 RUN pwd
 ###RUN wine /home/docker/.wine/drive_c/racing/STEAMCMD/steamcmd.exe +login anonymous +force_install_dir ../rFactor2-Dedicated +app_update 400300 +quit
 
