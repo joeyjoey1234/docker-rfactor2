@@ -12,4 +12,5 @@
 
 # Start the ssh service
 /usr/sbin/sshd
-x11vnc -auth /home/someuser/.Xauthority -display :10 -create -forever 
+su docker
+x11vnc -auth /home/docker/.Xauthority -display :10 -create -forever 
