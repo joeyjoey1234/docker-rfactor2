@@ -67,7 +67,7 @@ RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/i
 RUN localedef -v -c -i en_US -f UTF-8 en_US.UTF-8 || :
 
 # Copy the files into the container
-ADD . /src
+## ADD . /src
 
 # Expose ssh, rfactor 2 web and simulation ports, and vnc port.
 EXPOSE 22
@@ -124,5 +124,6 @@ RUN wine ./steamcmd.exe +login anonymous +force_install_dir ../rFactor2-Dedicate
 
 RUN chown docker:docker /home/docker/*.exe
 
+ADD . /src
 # Start xdm and ssh services.
 CMD ["/bin/bash", "/src/startup.sh"]
