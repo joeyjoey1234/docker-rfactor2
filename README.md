@@ -6,8 +6,8 @@ pterodactyl-rfactor2
 **Work in progress. Please test, Clean up is needed, and is in progress.**
 ![alt text](docker_rfactor2_diagram.png "Diagram")
 
-Install the eggie in your pterodactyl server
-Server needs atleast 4 ports.
+Install the eggie in your pterodactyl server \n
+Server needs atleast 4 ports. \n
 
 EXPOSE 22  *in egg as Variable*
 EXPOSE 54297 *Static* You have to get this to open.
