@@ -1,7 +1,7 @@
-# Container to be able to run an rFactor2 server (EXPERIMENTAL)
+# Container to be able to run an rFactor2 server 
 #
 # It Contains:
-# SSH server:  
+# SSH server:  (ran on port specfied by egg vars)
 # X server: The graphical user interface core. (xvfb + xdm)
 # JWM desktop: The graphical desktop interface.
 # VNC server: To access the desktop remotely. 
@@ -10,9 +10,10 @@
 # Based on rogaha/docker-desktop and suchja/wine
 
 
-FROM ubuntu:latest
+FROM debian:latest
 
 RUN apt-get update -y
+RUN apt-get upgrade -y
 RUN apt-get install -y openssh-server xdm xvfb jwm sudo xterm cabextract rox-filer x11vnc links
 
 
@@ -21,9 +22,16 @@ RUN apt-get update -y \
 	&& apt-get install -y --no-install-recommends \
 		curl \
 		unzip \
-		software-properties-common \
-	&& add-apt-repository ppa:ubuntu-wine/ppa
-
+		wget \
+		gnupg2 \
+		software-properties-common
+		
+RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key
+RUN apt-key add winehq.key
+RUN apt-add-repository https://dl.winehq.org/wine-builds/debian/
+RUN apt update
+RUN wget -O- -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_11/Release.key | sudo apt-key add -    
+RUN echo "deb http://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_11 ./" | sudo tee /etc/apt/sources.list.d/wine-obs.list
 # Install wine and related packages
 # Define which versions we need
 ENV WINE_MONO_VERSION 4.5.6
@@ -32,7 +40,7 @@ ENV WINE_GECKO_VERSION 2.40
 RUN dpkg --add-architecture i386 \
 	&& apt-get update -y \
 	&& apt-get install -y --no-install-recommends \
-		wine1.7 \
+		winehq-stable \
 		wine-gecko$WINE_GECKO_VERSION:i386 \
 		wine-gecko$WINE_GECKO_VERSION:amd64 \
 		wine-mono$WINE_MONO_VERSION \
