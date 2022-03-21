@@ -110,7 +110,7 @@ RUN wine msiexec /i wine-mono-7.1.1-x86.msi
 RUN wine msiexec /i wine-gecko-2.47.2-x86_64.msi
 RUN wine msiexec /i wine-gecko-2.47.1-x86.msi
 
-RUN echo '#!/bin/bash \n cd /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Bin64/ \n wine rFactor2\ Dedicated.exe' >> /home/docker/runrf2.sh
+RUN echo '#!/bin/bash \n cd /home/docker/.wine/drive_c/racing/STEAMCMD/ \n wine /home/docker/.wine/drive_c/racing/STEAMCMD/steamcmd.exe +login anonymous +force_install_dir ../rFactor2-Dedicated +app_update 400300 +quit \n cp /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Bin64/ModMgr.exe /home/docker/.wine/drive_c/racing/rfactor2-dedicated/MogMgr.exe \n cp /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Bin64/rFactor2\ Dedicated.exe ../rFactor2\ Dedicated.exe \n cp /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Support/Tools/MAS2_x64.exe /home/docker/.wine/drive_c/racing/rfactor2-dedicated/MAS2_x64.exe \n cd /home/docker/.wine/drive_c/racing/rfactor2-dedicated/ \n wine rFactor2\ Dedicated.exe' >> /home/docker/runrf2.sh
 RUN chmod +x /home/docker/runrf2.sh
 RUN chown docker:docker /home/docker/runrf2.sh
 
