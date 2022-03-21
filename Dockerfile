@@ -37,7 +37,7 @@ RUN wget -O- -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debi
 RUN echo "deb http://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_11 ./" | tee /etc/apt/sources.list.d/wine-obs.list
 # Install wine and related packages
 RUN apt update
-RUN apt install --install-recommends winehq-stable
+RUN apt install -y --install-recommends winehq-stable
 RUN wget http://dl.winehq.org/wine/wine-gecko/2.47.1/wine-gecko-2.47.1-x86.msi
 RUN wget http://dl.winehq.org/wine/wine-gecko/2.47.2/wine-gecko-2.47.2-x86_64.msi
 RUN wget https://dl.winehq.org/wine/wine-mono/7.1.1/wine-mono-7.1.1-x86.msi
