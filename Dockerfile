@@ -116,9 +116,11 @@ RUN chown docker:docker /home/docker/runrf2.sh
 
 RUN mkdir -p /home/docker/.wine/drive_c/racing/
 RUN mkdir /home/docker/.wine/drive_c/racing/STEAMCMD/
-RUN cd /home/docker/.wine/drive_c/racing/STEAMCMD/ && wget -nc http://media.steampowered.com/installer/steamcmd.zip
-RUN unzip steamcmd.zip
-RUN wine steamcmd.exe +login anonymous +force_install_dir ../rFactor2-Dedicated +app_update 400300 +quit
+RUN cd /home/docker/.wine/drive_c/racing/STEAMCMD/
+RUN wget http://media.steampowered.com/installer/steamcmd.zip
+RUN unzip ./steamcmd.zip
+RUN PWD
+RUN wine ./steamcmd.exe +login anonymous +force_install_dir ../rFactor2-Dedicated +app_update 400300 +quit
 
 RUN chown docker:docker /home/docker/*.exe
 
