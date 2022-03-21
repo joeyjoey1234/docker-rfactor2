@@ -114,6 +114,7 @@ RUN echo '#!/bin/bash \n cd /home/docker/.wine/drive_c/Racing/rfactor2-dedicated
 RUN chmod +x /home/docker/runrf2.sh
 RUN chown docker:docker /home/docker/runrf2.sh
 
+RUN mkdir /home/docker/.wine/drive_c/racing/
 RUN mkdir /home/docker/.wine/drive_c/racing/STEAMCMD/
 RUN cd /home/docker/.wine/drive_c/racing/STEAMCMD/ && wget -nc http://media.steampowered.com/installer/steamcmd.zip
 RUN unzip steamcmd.zip
