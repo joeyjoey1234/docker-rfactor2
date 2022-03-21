@@ -131,5 +131,5 @@ RUN pwd
 
 ADD . /src
 # Start xdm and ssh services.
-
+ENV password password
 CMD ["/bin/bash", "/src/startup.sh"]
