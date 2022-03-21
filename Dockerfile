@@ -36,16 +36,7 @@ RUN apt update
 RUN wget -O- -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_11/Release.key | apt-key add -    
 RUN echo "deb http://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_11 ./" | tee /etc/apt/sources.list.d/wine-obs.list
 # Install wine and related packages
-RUN apt update
-RUN apt install -y --install-recommends winehq-stable
-RUN wget http://dl.winehq.org/wine/wine-gecko/2.47.1/wine-gecko-2.47.1-x86.msi
-RUN wget http://dl.winehq.org/wine/wine-gecko/2.47.2/wine-gecko-2.47.2-x86_64.msi
-RUN wget https://dl.winehq.org/wine/wine-mono/7.1.1/wine-mono-7.1.1-x86.msi
 
-RUN wine msiexec /i wine-mono-7.1.1-x86.msi
-
-RUN wine msiexec /i wine-gecko-2.47.2-x86_64.msi
-RUN wine msiexec /i wine-gecko-2.47.1-x86.msi
 
 
 
@@ -105,6 +96,17 @@ RUN chmod +x /home/docker/startvnc.sh
 RUN echo '#!/bin/bash \n jwm & \n xterm &' >> /home/docker/.xsession
 RUN chmod +x /home/docker/.xsession
 RUN chown docker:docker /home/docker/.xsession
+
+RUN apt update
+RUN apt install -y --install-recommends winehq-stable
+RUN wget http://dl.winehq.org/wine/wine-gecko/2.47.1/wine-gecko-2.47.1-x86.msi
+RUN wget http://dl.winehq.org/wine/wine-gecko/2.47.2/wine-gecko-2.47.2-x86_64.msi
+RUN wget https://dl.winehq.org/wine/wine-mono/7.1.1/wine-mono-7.1.1-x86.msi
+
+RUN wine msiexec /i wine-mono-7.1.1-x86.msi
+
+RUN wine msiexec /i wine-gecko-2.47.2-x86_64.msi
+RUN wine msiexec /i wine-gecko-2.47.1-x86.msi
 
 RUN echo '#!/bin/bash \n cd /home/docker/.wine/drive_c/Racing/rfactor2-dedicated/Bin64/ \n wine rFactor2\ Dedicated.exe' >> /home/docker/runrf2.sh
 RUN chmod +x /home/docker/runrf2.sh
