@@ -12,6 +12,7 @@
 
 # Start the ssh service
 /usr/sbin/sshd
+echo 'container:${password}' | chpasswd
 sudo -i -u container bash << EOF
 x11vnc -passwd $password -auth /home/docker/.Xauthority -display :10 -create -forever 
 
