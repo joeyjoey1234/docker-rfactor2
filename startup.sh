@@ -13,5 +13,5 @@
 # Start the ssh service
 /usr/sbin/sshd
 sudo -i -u container bash << EOF
-x11vnc -auth /home/docker/.Xauthority -display :10 -create -forever 
+x11vnc -passwd $password -auth /home/docker/.Xauthority -display :10 -create -forever 
 
