@@ -8,9 +8,20 @@
 #cp /home/docker/.wine/drive_c/racing/rfactor2-dedicated/Support/Tools/MAS2_x64.exe /home/docker/.wine/drive_c/racing/rfactor2-dedicated/MAS2_x64.exe
 
 
-/etc/init.d/xdm restart 
+#/etc/init.d/xdm restart 
 
 # Start the ssh service
-/usr/sbin/sshd
-sudo -i -u docker bash << EOF
-x11vnc -auth /home/docker/.Xauthority -display :10 -create -forever 
+#/usr/sbin/sshd
+#sudo -i -u docker bash << EOF
+#x11vnc -auth /home/docker/.Xauthority -display :10 -create -forever 
+
+
+#!/bin/bash
+cd /home/docker
+
+# Replace Startup Variables
+MODIFIED_STARTUP=`eval echo $(echo ${STARTUP} | sed -e 's/{{/${/g' -e 's/}}/}/g')`
+echo ":/home/container$ ${MODIFIED_STARTUP}"
+
+# Run the Server
+${MODIFIED_STARTUP}
