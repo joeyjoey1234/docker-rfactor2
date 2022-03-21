@@ -131,8 +131,5 @@ RUN pwd
 
 ADD . /src
 # Start xdm and ssh services.
-USER container
-ENV  USER=container HOME=/home/container
-WORKDIR /home/container
 
 CMD ["/bin/bash", "/src/startup.sh"]
