@@ -97,6 +97,8 @@ RUN echo '#!/bin/bash \n jwm & \n xterm &' >> /home/docker/.xsession
 RUN chmod +x /home/docker/.xsession
 RUN chown docker:docker /home/docker/.xsession
 
+RUN su docker
+RUN cd ~
 RUN apt update
 RUN apt install -y --install-recommends winehq-stable
 RUN wget http://dl.winehq.org/wine/wine-gecko/2.47.1/wine-gecko-2.47.1-x86.msi
