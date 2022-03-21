@@ -112,7 +112,7 @@ RUN echo '#!/bin/bash \n wine /home/container/.wine/drive_c/racing/rfactor2-dedi
 RUN echo '#!/bin/bash \n wine /home/container/.wine/drive_c/racing/rfactor2-dedicated/MAS2_x64.exe ' >> /home/container/start_MAS.sh
 RUN echo '#!/bin/bash \n wine /home/container/.wine/drive_c/racing/rfactor2-dedicated/Bin64/rFactor2\ Dedicated.exe ' >> /home/container/start_Server.sh
 
-RUN echo '#!/bin/bash \n echo "paste download link has to be in a zip file or download link from https://steamworkshopdownloader.io/" \n read LINK \n cd ~/.wine/drive_c/racing/rfactor2-dedicated/Packages/ \n wget -O lmao.zip $LINK \n unzip *.zip' >> /home/WORKDIR /home/container/download_mod.sh
+RUN echo '#!/bin/bash \n echo "paste download link has to be in a zip file or download link from https://steamworkshopdownloader.io/" \n read LINK \n cd ~/.wine/drive_c/racing/rfactor2-dedicated/Packages/ \n wget -O lmao.zip $LINK \n unzip *.zip' >> /home/container/download_mod.sh
 
 RUN chmod +x /home/container/*.sh
 
