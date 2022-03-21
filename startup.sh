@@ -7,4 +7,4 @@ wine /home/docker/.wine/drive_c/racing/STEAMCMD/steamcmd.exe +login anonymous +f
 
 # Start the ssh service
 /usr/sbin/sshd -D &
-/home/docker/startvnc.sh &
+/home/docker/startvnc.sh 
