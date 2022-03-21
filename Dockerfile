@@ -27,23 +27,27 @@ RUN apt-get update -y \
 		unzip \
 		software-properties-common
 		
+
+RUN dpkg --add-architecture i386 		
 RUN wget -nc https://dl.winehq.org/wine-builds/winehq.key
 RUN apt-key add winehq.key
 RUN apt-add-repository https://dl.winehq.org/wine-builds/debian/
 RUN apt update
-RUN wget -O- -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_11/Release.key | sudo apt-key add -    
-RUN echo "deb http://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_11 ./" | sudo tee /etc/apt/sources.list.d/wine-obs.list
+RUN wget -O- -q https://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_11/Release.key | apt-key add -    
+RUN echo "deb http://download.opensuse.org/repositories/Emulators:/Wine:/Debian/Debian_11 ./" | tee /etc/apt/sources.list.d/wine-obs.list
 # Install wine and related packages
-# Define which versions we need
-ENV WINE_MONO_VERSION 4.5.6
-ENV WINE_GECKO_VERSION 2.40
+RUN apt update
+RUN apt install --install-recommends winehq-stable
+RUN wget http://dl.winehq.org/wine/wine-gecko/2.47.1/wine-gecko-2.47.1-x86.msi
+RUN wget http://dl.winehq.org/wine/wine-gecko/2.47.2/wine-gecko-2.47.2-x86_64.msi
+RUN wget https://dl.winehq.org/wine/wine-mono/7.1.1/wine-mono-7.1.1-x86.msi
 
-RUN dpkg --add-architecture i386 \
-	&& apt-get update -y \
-	&& apt-get install -y --no-install-recommends \
-		winehq-stable \
-		wine-gecko \
-		wine-mono 
+RUN wine msiexec /i wine-mono-7.1.1-x86.msi
+
+RUN wine msiexec /i wine-gecko-2.47.2-x86_64.msi
+RUN wine msiexec /i wine-gecko-2.47.1-x86.msi
+
+
 
 
 # Use the latest version of winetricks
