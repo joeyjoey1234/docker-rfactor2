@@ -78,7 +78,7 @@ EXPOSE 5900
 RUN mkdir /var/run/sshd 
 
 # Add container user and generate a random password with 12 characters that includes at least one capital letter and number.
-RUN adduser --disabled-password --home /home/container container
+RUN adduser --home /home/container container
 #TODO password is container, change it
 RUN sed -Ei 's/adm:x:4:/container:x:4:container/' /etc/group
 RUN adduser container sudo
