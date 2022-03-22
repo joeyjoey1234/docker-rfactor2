@@ -3,20 +3,20 @@
 Docker-rfactor2
 ===============
 
-This was a failed pterodactyl egg/image that was reverted back general use as a docker conatiner 
+This was a failed pterodactyl egg/image that was reverted back for general use as a docker conatiner 
 **Finished), Clean up is needed, and is not in progress.**
 ![alt text](docker_rfactor2_diagram.png "Diagram")
 
 Grab the package here  ghcr.io/joeyjoey1234/ptero-rfactor2:latest
 Server needs atleast 4 ports and the steam ports possibly
 
-EXPOSE 22  SSH Server  *SSH IS BROKEN, DONT NEED IT ANYWAY, JUST WGET EVERYTHING YOU NEED, *
+EXPOSE 22  SSH Server  
 EXPOSE 54297 Game Port
 EXPOSE 64297 Game Port
 EXPOSE 5900 VNC Server
 
 YOU MUST HAVE A password VAR in your env.
-This will be the VNC password
+This will be the VNC password and ssh password
 
 Scripts to start each important part of the program are included in /home/container
 ive allso added a script to download mods.
