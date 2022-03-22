@@ -21,6 +21,13 @@ This will be the VNC password and ssh password
 Scripts to start each important part of the program are included in /home/container
 ive allso added a script to download mods.
 
+How to run this bad boi
+=========================
+Spin up container with image
+Login via ssh or VNC (Perfered VNC) (default password is password)
+use the script located in /home/container to install the game. (install_update_game.sh)
+use the scripts located in /home/container to run the executables. (MAS2.exe etc.) they should all be there.
+Make sure you have those game ports forwarded etc
 
 
 
