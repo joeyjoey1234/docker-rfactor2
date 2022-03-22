@@ -3,13 +3,14 @@
 Docker-rfactor2
 ===============
 
-**Work in progress. Please test, Clean up is needed, and is not in progress.**
+This was a failed pterodactyl egg/image that was reverted back general use as a docker conatiner 
+**Finished), Clean up is needed, and is not in progress.**
 ![alt text](docker_rfactor2_diagram.png "Diagram")
 
 Grab the package here  ghcr.io/joeyjoey1234/ptero-rfactor2:latest
 Server needs atleast 4 ports and the steam ports possibly
 
-EXPOSE 22  SSH Server
+EXPOSE 22  SSH Server  *SSH IS BROKEN, DONT NEED IT ANYWAY, JUST WGET EVERYTHING YOU NEED, *
 EXPOSE 54297 Game Port
 EXPOSE 64297 Game Port
 EXPOSE 5900 VNC Server
@@ -17,7 +18,15 @@ EXPOSE 5900 VNC Server
 YOU MUST HAVE A password VAR in your env.
 This will be the VNC password
 
-YOU WILL GET THE BELOW ERROR IF YOU DO NOT HAVE THE 'password' VAR SET IN YOUR ENV
+Scripts to start each important part of the program are included in /home/container
+ive allso added a script to download mods.
+
+
+
+
+Troubleshooting 
+YOU WILL GET THE BELOW ERROR IF THE PASSWORD ENV VAR IS BLANK
+============================================================
 21/03/2022 23:39:11 passing arg to libvncserver: -passwd
 21/03/2022 23:39:11 x11vnc version: 0.9.16 lastmod: 2019-01-05  pid: 44
 21/03/2022 23:39:11 
